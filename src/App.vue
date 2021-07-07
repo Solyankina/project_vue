@@ -6,7 +6,9 @@
     <div class="wrapper">
       <AddPaymentForm @addNewPayment="addNewPaymentData"/>
       <br/>
-      <PaymentsDisplay :items="paymentsList"/>
+      <PaymentsDisplay :items="getPayments"/>
+      <br/>
+      <Pagination :fetchPageSize="fetchPageSize" :fetchPageCount="getPaymentsPageCount" />
     </div>
   </div>
 </template>
@@ -14,56 +16,51 @@
 <script>
 import PaymentsDisplay from './components/PaymentsDisplay.vue'
 import AddPaymentForm from './components/AddPaymentForm.vue'
+import Pagination from './components/Pagination.vue'
+import store from './store'
+import { mapActions, mapGetters } from 'vuex'
 
 export default {
   name: 'App',
+  store,
   components: {
     PaymentsDisplay,
-    AddPaymentForm
+    AddPaymentForm,
+    Pagination
   },
-data(){
-        return {
-            paymentsList: []
-        }
-    },
-    methods: {
-        addNewPaymentData(value){
-          this.paymentsList= [...this.paymentsList, value]
-        },
-        fetchData(){
-          return []
-            // return [
-            //     {
-            //         date: "12.03.2020",
-            //         category: "Food",
-            //         value: 180
-            //     },
-            //     {
-            //         date: "12.04.2020",
-            //         category: "Internet",
-            //         value: 100
-            //     },
-            //     {
-            //         date: "28.08.2019",
-            //         category: "Food",
-            //         value: 300
-            //     },
-            //     {
-            //         date: "11.03.2018",
-            //         category: "Sport",
-            //         value: 1400
-            //     },
-            // ]
-        }
-    },
-    created(){
-        this.paymentsList = this.fetchData()
+  data() {
+    return {
+      fetchPageSize: 10
     }
+  },
+  methods: {
+    addNewPaymentData(value) {
+      this.$store.commit('addPayment', value)
+    },
+
+    ...mapActions([
+      'fetchData'
+    ])
+  },
+  computed: {
+    ...mapGetters([
+      'getPayments',
+      'getPaymentsPageCount'
+    ])
+  },
+  mounted() {
+    if (!this.getPayments.length) {
+      const page = {number: 0, size: this.fetchPageSize}
+      this.fetchData(page)
+      this.$store.commit('setPaymentsPageCount', this.fetchPageSize)
+    }
+  }
+
 }
 </script>
 
 <style lang="scss" scoped module>
-.header{
+.header {
   font-size: 20px;
 }
 </style>
