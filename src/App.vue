@@ -4,8 +4,8 @@
       <h1>My Personal Cost</h1>
     </div>
     <div class="wrapper">
-      <AddPaymentForm @addNewPayment="addNewPaymentData"/>
-      <br/>
+      <router-view @addNewPayment="addNewPaymentData"/>
+      <br />
       <PaymentsDisplay :items="getPayments"/>
       <br/>
       <Pagination :fetchPageSize="fetchPageSize" :fetchPageCount="getPaymentsPageCount" />
@@ -15,17 +15,17 @@
 
 <script>
 import PaymentsDisplay from './components/PaymentsDisplay.vue'
-import AddPaymentForm from './components/AddPaymentForm.vue'
 import Pagination from './components/Pagination.vue'
 import store from './store'
 import { mapActions, mapGetters } from 'vuex'
+import router from './router'
 
 export default {
   name: 'App',
   store,
+  router,
   components: {
     PaymentsDisplay,
-    AddPaymentForm,
     Pagination
   },
   data() {
