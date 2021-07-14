@@ -6,9 +6,15 @@ Vue.use(Router)
 
 export default new Router({
     mode: 'history',
+    baseURI: '/',
     routes: [
         {
             path: '/add/payment/:category?',
+            name: 'PaymentForm',
+            component: AddPaymentForm
+        },
+        {
+            path: '/*',
             name: 'PaymentForm',
             component: AddPaymentForm
         }
