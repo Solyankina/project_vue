@@ -1,6 +1,6 @@
 <template>
-  <div id="app">
-    <div :class="[$style.header]">
+  <div>
+    <div class="header">
       <h1>My Personal Cost</h1>
     </div>
     <div class="wrapper">
@@ -30,7 +30,7 @@ export default {
   },
   data() {
     return {
-      fetchPageSize: 10
+      fetchPageSize: 3
     }
   },
   methods: {
@@ -59,8 +59,10 @@ export default {
 }
 </script>
 
-<style lang="scss" scoped module>
+<style lang="scss" scoped>
 .header {
   font-size: 20px;
 }
+
+
 </style>

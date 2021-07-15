@@ -9,13 +9,13 @@ export default new Router({
     baseURI: '/',
     routes: [
         {
-            path: '/add/payment/:category?',
-            name: 'PaymentForm',
+            path: '/add/payment/:category',
+            name: 'addPayment',
             component: AddPaymentForm
         },
         {
             path: '/*',
-            name: 'PaymentForm',
+            name: 'paymentList',
             component: AddPaymentForm
         }
     ]
