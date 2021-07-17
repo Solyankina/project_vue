@@ -1,6 +1,5 @@
 import Vue from 'vue'
 import Router from 'vue-router'
-import AddPaymentForm from '@/components/AddPaymentForm'
 
 Vue.use(Router)
 
@@ -11,12 +10,12 @@ export default new Router({
         {
             path: '/add/payment/:category',
             name: 'addPayment',
-            component: AddPaymentForm
+            component: () => import('@/components/AddPaymentForm')
         },
         {
             path: '/*',
             name: 'paymentList',
-            component: AddPaymentForm
+            component: () => import('@/components/AddPaymentForm')
         }
     ]
 })
