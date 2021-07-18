@@ -1,19 +1,10 @@
 <template>
-  <div class="context__menu__icon" @click="show">
-    <svg class="context__menu__icon" enable-background="new 0 0 515.555 515.555" height="16" width="16"
-         viewBox="0 0 515.555 515.555" xmlns="http://www.w3.org/2000/svg">
-      <path
-          d="m303.347 18.875c25.167 25.167 25.167 65.971 0 91.138s-65.971 25.167-91.138 0-25.167-65.971 0-91.138c25.166-25.167 65.97-25.167 91.138 0"/>
-      <path
-          d="m303.347 212.209c25.167 25.167 25.167 65.971 0 91.138s-65.971 25.167-91.138 0-25.167-65.971 0-91.138c25.166-25.167 65.97-25.167 91.138 0"/>
-      <path
-          d="m303.347 405.541c25.167 25.167 25.167 65.971 0 91.138s-65.971 25.167-91.138 0-25.167-65.971 0-91.138c25.166-25.167 65.97-25.167 91.138 0"/>
-    </svg>
+  <transition name="fade">
     <div class="context__menu" v-show="isDisplayed" @mouseleave="hide">
       <div class="context__menu__item" @click="edit">Edit</div>
       <div class="context__menu__item" @click="remove">Remove</div>
     </div>
-  </div>
+  </transition>
 </template>
 
 <script>
@@ -35,21 +26,30 @@ export default {
       this.isDisplayed = false
     },
     edit() {
-      this.$router.push({name: 'addPayment', params: {category: this.category}, query: {id: this.id, value: this.value}})
-          .catch(() => {});
+      this.$router.push({
+        name: 'addPayment',
+        params: {category: this.category},
+        query: {id: this.id, value: this.value}
+      })
+          .catch(() => {
+          });
     },
     remove() {
       this.$store.commit('removePayment', this.id)
+    },
+    onShown(settings) {
+      if (settings.id === this.id) {
+        this.show()
+      }
     }
+  },
+  mounted() {
+    this.$modal.EventBus.$on('showContextMenu', this.onShown)
   }
 }
 </script>
 
 <style scoped>
-
-.context__menu__icon {
-  position: relative;
-}
 
 .context__menu {
   position: absolute;
@@ -67,4 +67,13 @@ export default {
 .context__menu__item:hover {
   background-color: #e9e9e9;
 }
+
+.fade-enter-active, .fade-leave-active {
+  transition: opacity .3s;
+}
+
+.fade-enter, .fade-leave-to {
+  opacity: 0;
+}
+
 </style>
