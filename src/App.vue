@@ -1,69 +1,58 @@
 <template>
-  <div id="app">
-    <div :class="[$style.header]">
-      <h1>My Personal Cost</h1>
-    </div>
-    <div class="wrapper">
-      <AddPaymentForm @addNewPayment="addNewPaymentData"/>
+  <v-app>
+    <v-main>
+      <div class="text-h5 text-md-3 pb-4 pt-6 pl-6">My personal costs</div>
+      <router-view @addNewPayment="addNewPaymentData"/>
+      <br />
+      <PaymentsDisplay :items="getPayments"/>
       <br/>
-      <PaymentsDisplay :items="paymentsList"/>
-    </div>
-  </div>
+      <Pagination :fetchPageSize="fetchPageSize" :fetchPageCount="getPaymentsPageCount" />
+    </v-main>
+  </v-app>
 </template>
 
 <script>
 import PaymentsDisplay from './components/PaymentsDisplay.vue'
-import AddPaymentForm from './components/AddPaymentForm.vue'
+import Pagination from './components/Pagination.vue'
+import store from './store'
+import { mapActions, mapGetters } from 'vuex'
+import router from './router'
 
 export default {
   name: 'App',
+  store,
+  router,
   components: {
     PaymentsDisplay,
-    AddPaymentForm
+    Pagination
   },
-data(){
-        return {
-            paymentsList: []
-        }
-    },
-    methods: {
-        addNewPaymentData(value){
-          this.paymentsList= [...this.paymentsList, value]
-        },
-        fetchData(){
-          return []
-            // return [
-            //     {
-            //         date: "12.03.2020",
-            //         category: "Food",
-            //         value: 180
-            //     },
-            //     {
-            //         date: "12.04.2020",
-            //         category: "Internet",
-            //         value: 100
-            //     },
-            //     {
-            //         date: "28.08.2019",
-            //         category: "Food",
-            //         value: 300
-            //     },
-            //     {
-            //         date: "11.03.2018",
-            //         category: "Sport",
-            //         value: 1400
-            //     },
-            // ]
-        }
-    },
-    created(){
-        this.paymentsList = this.fetchData()
+  data() {
+    return {
+      fetchPageSize: 3
     }
+  },
+  methods: {
+    addNewPaymentData(value) {
+      this.$store.commit('addPayment', value)
+    },
+
+    ...mapActions([
+      'fetchData'
+    ])
+  },
+  computed: {
+    ...mapGetters([
+      'getPayments',
+      'getPaymentsPageCount'
+    ])
+  },
+  mounted() {
+    if (!this.getPayments.length) {
+      const page = {number: 0, size: this.fetchPageSize}
+      this.fetchData(page)
+      this.$store.commit('setPaymentsPageCount', this.fetchPageSize)
+    }
+  }
+
 }
 </script>
-
-<style lang="scss" scoped module>
-.header{
-  font-size: 20px;
-}
-</style>
