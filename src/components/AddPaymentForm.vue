@@ -1,18 +1,17 @@
 <template>
-  <div>
-    <button @click="showForm" type="button">{{showButton.title}}</button>
-    <div class="modal__window" v-show="showButton.value">
-      <div class="popup-fade"></div>
-      <div class="popup">
-        <a class="popup-close" href="#" @click="close">Close</a>
-        <form class="payment-form">
-          <input placeholder="Date" type="text" v-model.trim="date"/><br>
-          <input placeholder="Category" type="text" v-model.trim="category"/><br>
-          <input placeholder="Amount" type="number" v-model.number="value"/><br>
-          <button @click="save" type="button">Save</button>
-        </form>
-      </div>
-    </div>
+  <div class="pl-6">
+      <v-btn color="teal" dark @click="showForm" type="button">{{showButton.title}}<v-icon>mdi-plus</v-icon></v-btn>
+      <v-dialog class="modal__window" v-model="showButton.value" width="500">
+        <v-card class="pt-8">
+          <v-form class="payment-form">
+            <v-text-field label="Date" v-model.trim="date" outlined class="mx-4"></v-text-field><br>
+            <v-text-field label="Category" v-model.trim="category" outlined class="mx-4"></v-text-field><br>
+            <v-text-field label="Amount" v-model.number="value" outlined class="mx-4"></v-text-field><br>
+            <v-btn @click="save" outlined color="indigo" small class="ml-4 mb-4">Save</v-btn>
+
+          </v-form>
+        </v-card>
+      </v-dialog>
   </div>
 </template>
 
@@ -75,32 +74,32 @@ export default {
 </script>
 
 <style>
-.popup-fade {
-  background: #000;
-  position: fixed;
-  left: 0;
-  top: 0;
-  width: 100%;
-  height: 100%;
-  opacity: 0.7;
-  z-index: 1;
-}
-.popup {
-  position: fixed;
-  top: 20%;
-  left: 50%;
-  padding: 20px;
-  width: 360px;
-  margin-left: -200px;
-  background: #fff;
-  border: 1px solid;
-  border-radius: 4px;
-  opacity: 1;
-  z-index: 2;
-}
-.popup-close {
-  position: absolute;
-  top: 10px;
-  right: 10px;
-}
+/*.popup-fade {*/
+/*  background: #000;*/
+/*  position: fixed;*/
+/*  left: 0;*/
+/*  top: 0;*/
+/*  width: 100%;*/
+/*  height: 100%;*/
+/*  opacity: 0.7;*/
+/*  z-index: 1;*/
+/*}*/
+/*.popup {*/
+/*  position: fixed;*/
+/*  top: 20%;*/
+/*  left: 50%;*/
+/*  padding: 20px;*/
+/*  width: 360px;*/
+/*  margin-left: -200px;*/
+/*  background: #fff;*/
+/*  border: 1px solid;*/
+/*  border-radius: 4px;*/
+/*  opacity: 1;*/
+/*  z-index: 2;*/
+/*}*/
+/*.popup-close {*/
+/*  position: absolute;*/
+/*  top: 10px;*/
+/*  right: 10px;*/
+/*}*/
 </style>

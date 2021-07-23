@@ -1,16 +1,14 @@
 <template>
-  <div>
-    <div class="header">
-      <h1>My Personal Cost</h1>
-    </div>
-    <div class="wrapper">
+  <v-app>
+    <v-main>
+      <div class="text-h5 text-md-3 pb-4 pt-6 pl-6">My personal costs</div>
       <router-view @addNewPayment="addNewPaymentData"/>
       <br />
       <PaymentsDisplay :items="getPayments"/>
       <br/>
       <Pagination :fetchPageSize="fetchPageSize" :fetchPageCount="getPaymentsPageCount" />
-    </div>
-  </div>
+    </v-main>
+  </v-app>
 </template>
 
 <script>
@@ -58,11 +56,3 @@ export default {
 
 }
 </script>
-
-<style lang="scss" scoped>
-.header {
-  font-size: 20px;
-}
-
-
-</style>
