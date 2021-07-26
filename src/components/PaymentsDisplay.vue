@@ -32,11 +32,12 @@ export default {
   },
   data() {
     return {
-      series: [44, 55, 41, 17, 15],
+      series: this.$store.state.analytics.map( a => a.data),
       chartOptions: {
         chart: {
           type: 'donut',
         },
+        labels: this.$store.state.analytics.map( a => a.category),
         responsive: [{
           breakpoint: 480,
           options: {
@@ -57,12 +58,15 @@ export default {
       default: () => [],
     }
   },
+  watch:{
+    items: function () {
+      this.series = this.$store.state.analytics.map( a => a.data)
+      this.chartOptions.labels = this.$store.state.analytics.map( a => a.data)
+    }
+  }
 }
 </script>
 <style scoped>
-/*series: [{*/
-/*  name: 'series-1',*/
-/*  data: [30, 40, 45, 50, 49, 60, 70, 91]*/
-/*}]*/
+
 </style>
 

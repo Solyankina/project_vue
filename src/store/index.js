@@ -4,12 +4,23 @@ import {payments} from '../db/data'
 
 Vue.use(Vuex)
 
+function initAnalytics() {
+    const categories = [...new Set(payments.map(p => p.category))]
+    return categories.map(c => {
+            return {
+                category: c,
+                data: payments.filter(p => p.category === c).reduce((sum, p) => sum + p.value, 0)
+            }
+        }
+    )
+}
+
 export default new Vuex.Store({
     state: {
         paymentsList: [],
         paymentsPageCount: 0,
         paymentsFetchSize: 0,
-        analytics: []
+        analytics: initAnalytics()
     },
     mutations: {
         setPaymentsListData(state, payload) {
@@ -33,6 +44,8 @@ export default new Vuex.Store({
                 state.paymentsPageCount = Math.ceil(payments.length / state.paymentsFetchSize)
                 state.paymentsList = payments.slice(-1 * state.paymentsFetchSize)
             }
+
+            state.analytics = initAnalytics()
         },
         removePayment(state, payload) {
             const index = payments.findIndex(item => item.id === payload);
@@ -48,6 +61,8 @@ export default new Vuex.Store({
             }
             const end = start + state.paymentsFetchSize
             state.paymentsList = payments.slice(index, end)
+
+            state.analytics = initAnalytics()
         }
     },
     getters: {
@@ -57,7 +72,7 @@ export default new Vuex.Store({
     actions: {
         fetchData({commit}, page) {
             return new Promise((resolve) => {
-                // имитируем работу с сетью, ставим задержку получения данных в 1 секунду
+                // имитируем работу с сетью, ставим задержку получения данных
                 setTimeout(() => {
                     const start = page.size * page.number
                     const end = start + page.size
@@ -67,11 +82,8 @@ export default new Vuex.Store({
                 // запускаем изменение состояния через commit
                 commit('setPaymentsListData', res)
             })
-        },
-        getAnalytics() {
-            const categories = [...new Set(payments.map(p => p.category))]
-            return categories.map(c => payments.filter(p => p.category === c).reduce(( sum , p ) => sum + p.value , 0))
-        },
-    },
-
+        }
+    }
 })
+
+
