@@ -28,7 +28,7 @@ export default {
   },
   data() {
     return {
-      fetchPageSize: 3
+      fetchPageSize: 8
     }
   },
   methods: {
