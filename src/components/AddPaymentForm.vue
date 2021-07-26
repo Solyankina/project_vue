@@ -73,33 +73,5 @@ export default {
 }
 </script>
 
-<style>
-/*.popup-fade {*/
-/*  background: #000;*/
-/*  position: fixed;*/
-/*  left: 0;*/
-/*  top: 0;*/
-/*  width: 100%;*/
-/*  height: 100%;*/
-/*  opacity: 0.7;*/
-/*  z-index: 1;*/
-/*}*/
-/*.popup {*/
-/*  position: fixed;*/
-/*  top: 20%;*/
-/*  left: 50%;*/
-/*  padding: 20px;*/
-/*  width: 360px;*/
-/*  margin-left: -200px;*/
-/*  background: #fff;*/
-/*  border: 1px solid;*/
-/*  border-radius: 4px;*/
-/*  opacity: 1;*/
-/*  z-index: 2;*/
-/*}*/
-/*.popup-close {*/
-/*  position: absolute;*/
-/*  top: 10px;*/
-/*  right: 10px;*/
-/*}*/
+<style scoped>
 </style>

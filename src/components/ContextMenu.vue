@@ -62,29 +62,4 @@ export default {
 
 <style scoped>
 
-.context__menu {
-  position: absolute;
-  border: none;
-  background: white;
-  box-shadow: 0 14px 28px rgba(0, 0, 0, 0.25), 0 10px 10px rgba(0, 0, 0, 0.22);
-  padding: 8px 0px;
-  z-index: 1;
-}
-
-.context__menu__item {
-  padding: 12px;
-}
-
-.context__menu__item:hover {
-  background-color: #e9e9e9;
-}
-
-.fade-enter-active, .fade-leave-active {
-  transition: opacity .3s;
-}
-
-.fade-enter, .fade-leave-to {
-  opacity: 0;
-}
-
 </style>
