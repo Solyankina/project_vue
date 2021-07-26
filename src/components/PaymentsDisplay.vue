@@ -16,16 +16,40 @@
         <ContextMenu :id="item.id" :category="item.category" :value="item.value"/>
       </v-col>
     </v-row>
+    <VueApexCharts type="donut" :options="chartOptions" :series="series"></VueApexCharts>
   </div>
 </template>
 
 <script>
 import ContextMenu from './ContextMenu'
+import VueApexCharts from "vue-apexcharts";
 
 export default {
   name: "PaymentsDisplay",
   components: {
-    ContextMenu
+    ContextMenu,
+    VueApexCharts
+  },
+  data() {
+    return {
+      series: [44, 55, 41, 17, 15],
+      chartOptions: {
+        chart: {
+          type: 'donut',
+        },
+        responsive: [{
+          breakpoint: 480,
+          options: {
+            chart: {
+              width: 200
+            },
+            legend: {
+              position: 'bottom'
+            }
+          }
+        }]
+      },
+    }
   },
   props: {
     items: {
@@ -33,30 +57,12 @@ export default {
       default: () => [],
     }
   },
-  methods: {
-    onClickMenuIcon(id) {
-      this.$modal.showContextMenu(id)
-    }
-  }
 }
 </script>
 <style scoped>
-/*table {*/
-/*  border-spacing: 0*/
-/*}*/
-
-/*th, td {*/
-/*  padding-right: 48px;*/
-/*  padding-bottom: 8px;*/
-/*  padding-top: 8px;*/
-/*  text-align: left;*/
-/*  border-bottom: 1px solid black;*/
-/*  border-right: none;*/
-/*  border-left: none;*/
-/*}*/
-
-/*.context__menu__icon {*/
-/*  position: relative;*/
-/*}*/
-
+/*series: [{*/
+/*  name: 'series-1',*/
+/*  data: [30, 40, 45, 50, 49, 60, 70, 91]*/
+/*}]*/
 </style>
+

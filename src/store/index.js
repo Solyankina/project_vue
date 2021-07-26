@@ -8,7 +8,8 @@ export default new Vuex.Store({
     state: {
         paymentsList: [],
         paymentsPageCount: 0,
-        paymentsFetchSize: 0
+        paymentsFetchSize: 0,
+        analytics: []
     },
     mutations: {
         setPaymentsListData(state, payload) {
@@ -66,7 +67,11 @@ export default new Vuex.Store({
                 // запускаем изменение состояния через commit
                 commit('setPaymentsListData', res)
             })
-        }
+        },
+        getAnalytics() {
+            const categories = [...new Set(payments.map(p => p.category))]
+            return categories.map(c => payments.filter(p => p.category === c).reduce(( sum , p ) => sum + p.value , 0))
+        },
     },
 
 })
